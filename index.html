@@ -857,7 +857,7 @@
       : "Your HR is highly mature. Explore how agentic AI and Joule can push you even further.";
 
     showResultsView(true);
-    try{ localStorage.setItem("sapAssess", JSON.stringify(answers)); }catch(e){}
+    try{ localStorage.setItem("sapAssessTest", JSON.stringify(answers)); }catch(e){}
   }
 
   var SHEETS_URL = "YOUR_APPS_SCRIPT_URL";
@@ -939,7 +939,7 @@
 
   (function initAssess(){
     var saved=null;
-    try{ saved=JSON.parse(localStorage.getItem("sapAssess")||"null"); }catch(e){}
+    try{ saved=JSON.parse(localStorage.getItem("sapAssessTest")||"null"); }catch(e){}
     if(saved && saved.length===ASSESS.length && saved.every(function(x){return x!=null;})){
       answers = saved;
       var d = scoreData();

@@ -1,0 +1,1009 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>AI in HR | SAP SuccessFactors</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --blue:#0070f2;          /* SAP Horizon primary blue */
+    --blue-dark:#0040b5;     /* darker interaction blue */
+    --navy:#05103a;          /* deep brand navy */
+    --navy-2:#0a1b4d;
+    --gold:#f0ab00;          /* SAP logo gold */
+    --ink:#1a2b42;
+    --text:#475569;
+    --muted:#5b6b7f;
+    --line:#e3e7ec;
+    --line-2:#eef1f5;
+    --bg:#ffffff;
+    --bg-soft:#f5f6f7;       /* SAP Fiori background */
+    --radius:10px;
+    --maxw:1200px;
+    --font:"Inter","72","Segoe UI",system-ui,-apple-system,Arial,sans-serif;
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;font-family:var(--font);color:var(--ink);background:var(--bg);
+    line-height:1.6;-webkit-font-smoothing:antialiased;font-size:17px;
+  }
+  a{color:inherit;}
+  img{max-width:100%;}
+  h1,h2,h3,h4{margin:0;line-height:1.15;letter-spacing:-.02em;font-weight:800;color:var(--ink);}
+  p{margin:0;}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 28px;}
+  .section{padding:96px 0;}
+  .section.soft{background:var(--bg-soft);}
+
+  /* ---------- SAP logo ---------- */
+  .sap-logo{display:inline-flex;align-items:center;}
+  .sap-mark{
+    background:linear-gradient(118deg,#0070f2 0%,#3f97ff 55%,#0062d6 100%);
+    transform:skewX(-11deg);padding:5px 11px 6px;border-radius:3px;line-height:1;
+    box-shadow:0 1px 3px rgba(0,112,242,.35);
+  }
+  .sap-mark b{display:inline-block;transform:skewX(11deg);color:#fff;font-weight:800;font-size:20px;letter-spacing:.02em;}
+  .sap-mark.sm{padding:4px 9px 5px;}
+  .sap-mark.sm b{font-size:16px;}
+
+  /* ---------- Header ---------- */
+  header.top{
+    position:sticky;top:0;z-index:60;background:rgba(255,255,255,.92);
+    backdrop-filter:saturate(180%) blur(12px);border-bottom:1px solid var(--line);
+  }
+  .nav{display:flex;align-items:center;gap:28px;height:72px;}
+  .brandline{display:flex;align-items:center;gap:12px;}
+  .brandline .name{font-weight:700;font-size:16px;color:var(--ink);}
+  .brandline .name span{display:block;font-weight:500;font-size:12.5px;color:var(--muted);letter-spacing:0;}
+  .nav .links{display:flex;gap:30px;margin-left:auto;}
+  .nav .links a{text-decoration:none;color:var(--text);font-weight:600;font-size:15px;padding:4px 0;position:relative;}
+  .nav .links a::after{content:"";position:absolute;left:0;right:100%;bottom:-2px;height:2px;background:var(--blue);transition:right .25s ease;}
+  .nav .links a:hover{color:var(--blue);}
+  .nav .links a:hover::after{right:0;}
+  .btn{
+    display:inline-flex;align-items:center;gap:9px;text-decoration:none;font-weight:600;font-size:15px;
+    border-radius:8px;padding:11px 22px;transition:background .2s,transform .12s,box-shadow .2s,border-color .2s;cursor:pointer;
+  }
+  .btn-primary{background:var(--blue);color:#fff;box-shadow:0 1px 2px rgba(0,112,242,.25);}
+  .btn-primary:hover{background:var(--blue-dark);}
+  .btn-primary:active{transform:translateY(1px);}
+  .btn-outline{border:1.5px solid rgba(255,255,255,.55);color:#fff;}
+  .btn-outline:hover{border-color:#fff;background:rgba(255,255,255,.08);}
+  .btn-ghost{border:1.5px solid var(--line);color:var(--ink);background:#fff;}
+  .btn-ghost:hover{border-color:var(--blue);color:var(--blue);}
+  .nav .btn{margin-left:4px;}
+  @media(max-width:880px){.nav .links{display:none;}.nav .btn{margin-left:auto;}}
+
+  /* ---------- Hero ---------- */
+  .hero{position:relative;overflow:hidden;color:#fff;background:var(--navy);}
+  .hero::before{
+    content:"";position:absolute;inset:0;
+    background:
+      radial-gradient(1100px 620px at 78% -8%, rgba(0,112,242,.55), transparent 62%),
+      radial-gradient(760px 520px at 108% 118%, rgba(0,180,214,.30), transparent 60%),
+      linear-gradient(135deg,#05103a 0%,#0a1b4d 48%,#071646 100%);
+  }
+  .hero::after{
+    content:"";position:absolute;inset:0;opacity:.5;
+    background-image:linear-gradient(rgba(255,255,255,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.05) 1px,transparent 1px);
+    background-size:64px 64px;
+    animation:drift 32s linear infinite;
+    mask-image:radial-gradient(900px 500px at 70% 30%,#000,transparent 75%);
+    -webkit-mask-image:radial-gradient(900px 500px at 70% 30%,#000,transparent 75%);
+  }
+  .hero .wrap{position:relative;z-index:2;padding:104px 28px 110px;}
+  .kicker{
+    display:inline-flex;align-items:center;gap:10px;font-size:13px;font-weight:700;letter-spacing:.14em;
+    text-transform:uppercase;color:#7fb6ff;margin-bottom:22px;
+  }
+  .kicker::before{content:"";width:28px;height:2px;background:var(--gold);display:inline-block;}
+  .hero h1{font-size:clamp(34px,5.4vw,58px);max-width:17ch;margin-bottom:22px;color:#fff;}
+  .hero h1 .accent{color:#8fc0ff;}
+  .hero .lede{font-size:clamp(17px,2vw,20px);color:#cdd8ee;max-width:58ch;margin-bottom:36px;font-weight:400;}
+  .hero .actions{display:flex;gap:14px;flex-wrap:wrap;}
+  .hero .stats{display:flex;flex-wrap:wrap;gap:0;margin-top:64px;padding-top:36px;border-top:1px solid rgba(255,255,255,.14);}
+  .hero .stats .s{position:relative;padding:0 48px;}
+  .hero .stats .s:first-child{padding-left:0;}
+  .hero .stats .s + .s::before{content:"";position:absolute;left:0;top:4px;height:52px;width:1px;background:rgba(255,255,255,.15);}
+  .hero .stats .s b{display:block;font-size:46px;font-weight:800;letter-spacing:-.025em;color:#fff;line-height:1;font-variant-numeric:tabular-nums;}
+  .hero .stats .s b em{font-style:normal;font-size:1em;font-weight:800;color:#8fc0ff;margin-left:1px;}
+  .hero .stats .s > span{display:block;font-size:14px;color:#aebdd8;margin-top:16px;max-width:24ch;line-height:1.5;}
+  @media(max-width:700px){
+    .hero .stats{flex-direction:column;gap:26px;}
+    .hero .stats .s{padding:0;}
+    .hero .stats .s + .s::before{display:none;}
+  }
+
+  /* ---------- Section heading ---------- */
+  .eyebrow{display:inline-flex;align-items:center;gap:10px;font-size:13px;font-weight:700;letter-spacing:.13em;text-transform:uppercase;color:var(--blue);margin-bottom:16px;}
+  .eyebrow::before{content:"";width:26px;height:2px;background:var(--gold);}
+  .head{max-width:60ch;margin-bottom:54px;}
+  .head h2{font-size:clamp(28px,3.6vw,40px);margin-bottom:16px;}
+  .head p{font-size:18px;color:var(--text);}
+
+  /* ---------- 3 types ---------- */
+  .types{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;}
+  @media(max-width:860px){.types{grid-template-columns:1fr;}}
+  .type{
+    background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:34px 30px;
+    transition:border-color .2s,box-shadow .25s,transform .25s;position:relative;overflow:hidden;
+  }
+  .type:hover{border-color:#c9d6ea;box-shadow:0 14px 34px rgba(5,16,58,.09);transform:translateY(-3px);}
+  .type .ic{width:52px;height:52px;border-radius:12px;background:#eaf3ff;display:flex;align-items:center;justify-content:center;margin-bottom:22px;}
+  .type .ic svg{width:26px;height:26px;stroke:var(--blue);fill:none;stroke-width:1.6;}
+  .type .no{
+    position:absolute;top:-8px;right:14px;
+    font-size:88px;font-weight:800;color:#e8ecf2;line-height:1;
+    letter-spacing:-.04em;pointer-events:none;user-select:none;z-index:0;
+  }
+  .type .ic,.type .tag,.type h3,.type p,.type .ex{position:relative;z-index:1;}
+  .type h3{font-size:21px;margin-bottom:6px;}
+  .type .tag{font-size:12.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--gold);margin-bottom:14px;display:block;}
+  .type p{color:var(--text);font-size:15.5px;margin-bottom:16px;}
+  .type .ex{font-size:14px;color:var(--ink);background:var(--bg-soft);border-radius:8px;padding:12px 14px;border-left:3px solid var(--blue);}
+  .type .ex b{color:var(--navy-2);}
+
+  /* ---------- use cases ---------- */
+  .uses{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;background:#fff;}
+  @media(max-width:860px){.uses{grid-template-columns:repeat(2,1fr);}}
+  @media(max-width:560px){.uses{grid-template-columns:1fr;}}
+  .use{padding:30px 28px;border-right:1px solid var(--line-2);border-bottom:1px solid var(--line-2);transition:background .2s;}
+  .use:hover{background:var(--bg-soft);}
+  .use .uh{display:flex;align-items:center;gap:13px;margin-bottom:10px;}
+  .use .uic{width:40px;height:40px;border-radius:9px;background:#eaf3ff;display:flex;align-items:center;justify-content:center;flex:none;}
+  .use .uic svg{width:21px;height:21px;stroke:var(--blue);fill:none;stroke-width:1.6;}
+  .use h4{font-size:16.5px;}
+  .use p{font-size:14.5px;color:var(--text);}
+
+  /* ---------- case studies ---------- */
+  .cases{display:flex;flex-direction:column;gap:0;border-top:1px solid var(--line);}
+  .case{display:grid;grid-template-columns:260px 1fr auto;gap:40px;align-items:center;padding:42px 0;border-bottom:1px solid var(--line);}
+  .case .metric{font-size:clamp(42px,6vw,64px);font-weight:800;letter-spacing:-.03em;color:var(--blue);line-height:1;font-variant-numeric:tabular-nums;}
+  .case:nth-child(2) .metric{color:var(--navy-2);}
+  .case .metric small{display:block;font-size:14px;font-weight:600;color:var(--muted);letter-spacing:0;margin-top:10px;max-width:22ch;}
+  .case .co{font-size:13px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);margin-bottom:10px;}
+  .case .desc{font-size:16.5px;color:var(--text);max-width:52ch;}
+  .case .desc strong{color:var(--ink);font-weight:700;}
+  .case .go{display:inline-flex;align-items:center;gap:9px;text-decoration:none;font-weight:600;font-size:15px;color:var(--blue);white-space:nowrap;}
+  .case .go svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:1.8;transition:transform .2s;}
+  .case .go:hover{color:var(--blue-dark);}
+  .case .go:hover svg{transform:translateX(4px);}
+  @media(max-width:860px){
+    .case{grid-template-columns:1fr;gap:16px;padding:34px 0;}
+    .case .go{justify-self:start;}
+  }
+
+  .hub{
+    margin-top:46px;display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap;
+    background:#fff;border:1px solid var(--line);border-left:4px solid var(--gold);border-radius:var(--radius);padding:28px 32px;
+  }
+  .hub h3{font-size:19px;margin-bottom:5px;}
+  .hub p{color:var(--text);font-size:15px;}
+
+  /* ---------- resources ---------- */
+  .res-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;align-items:start;}
+  @media(max-width:980px){.res-grid{grid-template-columns:repeat(2,1fr);}}
+  @media(max-width:620px){.res-grid{grid-template-columns:1fr;}}
+  .res-card{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:28px 26px;display:flex;flex-direction:column;transition:border-color .2s,box-shadow .25s,transform .25s;}
+  .res-card:hover{border-color:#c9d6ea;box-shadow:0 12px 30px rgba(5,16,58,.08);transform:translateY(-3px);}
+  .res-card.feature{border-color:#f1d488;border-top:3px solid var(--gold);}
+  .res-cat{display:flex;align-items:center;gap:12px;margin-bottom:12px;}
+  .res-cat .ric{width:40px;height:40px;border-radius:9px;background:#eaf3ff;display:flex;align-items:center;justify-content:center;flex:none;}
+  .res-cat .ric svg{width:21px;height:21px;stroke:var(--blue);fill:none;stroke-width:1.6;}
+  .res-card.feature .ric{background:#fff5df;}
+  .res-card.feature .ric svg{stroke:var(--gold);}
+  .res-cat h3{font-size:18px;}
+  .res-badge{align-self:flex-start;margin-bottom:14px;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#9a6c00;background:#fff5df;padding:4px 10px;border-radius:999px;}
+  .res-links{list-style:none;padding:0;margin:0;}
+  .res-links a{display:flex;align-items:flex-start;gap:10px;text-decoration:none;color:var(--ink);font-size:15px;font-weight:500;line-height:1.4;padding:11px 0;border-top:1px solid var(--line-2);transition:color .18s;}
+  .res-links li:first-child a{border-top:none;padding-top:2px;}
+  .res-links a .lx{color:var(--muted);font-weight:400;font-size:13px;display:block;margin-top:1px;}
+  .res-links a svg{width:15px;height:15px;stroke:var(--blue);fill:none;stroke-width:1.9;margin-top:3px;flex:none;transition:transform .2s;}
+  .res-links a:hover{color:var(--blue);}
+  .res-links a:hover svg{transform:translate(2px,-2px);}
+  .res-tier{display:flex;align-items:baseline;gap:16px;flex-wrap:wrap;margin-bottom:24px;}
+  .res-tier.more{margin-top:52px;padding-top:36px;border-top:1px solid var(--line);}
+  .res-tier .t{font-size:13px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--blue);display:inline-flex;align-items:center;gap:10px;white-space:nowrap;}
+  .res-tier .t::before{content:"";width:22px;height:2px;background:var(--gold);}
+  .res-tier .d{font-size:14.5px;color:var(--muted);}
+
+  /* ---------- assessment ---------- */
+  .assess-intro{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:start;margin-bottom:52px;}
+  @media(max-width:820px){.assess-intro{grid-template-columns:1fr;gap:28px;}}
+  .assess-intro h3{font-size:22px;margin-bottom:10px;}
+  .assess-intro p{color:var(--text);font-size:16px;}
+  .assess-form{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:36px 32px;}
+  .assess-form h3{font-size:20px;margin-bottom:6px;}
+  .assess-form .sub{font-size:14.5px;color:var(--muted);margin-bottom:28px;}
+  .assess-q{margin-bottom:22px;}
+  .assess-q label.ql{display:block;font-size:15px;font-weight:600;color:var(--ink);margin-bottom:10px;}
+  .radio-row{display:flex;gap:8px;flex-wrap:wrap;}
+  .radio-row label{
+    display:flex;align-items:center;gap:7px;cursor:pointer;
+    background:var(--bg-soft);border:1.5px solid var(--line);border-radius:8px;
+    padding:8px 14px;font-size:14px;color:var(--ink);transition:border-color .18s,background .18s;
+  }
+  .radio-row input[type=radio]{accent-color:var(--blue);width:15px;height:15px;cursor:pointer;}
+  .radio-row label:has(input:checked){border-color:var(--blue);background:#eaf3ff;color:var(--blue);font-weight:600;}
+  .assess-divider{border:none;border-top:1px solid var(--line);margin:32px 0;}
+  .assess-module-head{display:flex;align-items:center;gap:16px;flex-wrap:wrap;margin-bottom:24px;}
+  .assess-module-head label{font-size:15px;font-weight:600;color:var(--ink);}
+  select.mod-pick{
+    appearance:none;background:#fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%235b6b7f' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E") no-repeat right 12px center;
+    border:1.5px solid var(--line);border-radius:8px;padding:9px 36px 9px 14px;
+    font-size:15px;color:var(--ink);cursor:pointer;min-width:240px;transition:border-color .18s;
+  }
+  select.mod-pick:focus{outline:none;border-color:var(--blue);}
+  .module-qs{display:none;}
+  .module-qs.active{display:block;}
+  .module-title{font-size:15px;font-weight:700;color:var(--blue);margin-bottom:20px;letter-spacing:.04em;text-transform:uppercase;}
+  .assess-actions{display:flex;gap:14px;flex-wrap:wrap;margin-top:32px;}
+  .btn-assess{
+    display:inline-flex;align-items:center;gap:8px;border:none;cursor:pointer;
+    padding:13px 26px;border-radius:8px;font-weight:700;font-size:15px;
+    background:var(--blue);color:#fff;transition:background .2s,transform .12s;font-family:inherit;
+  }
+  .btn-assess:hover{background:var(--blue-dark);}
+  .btn-assess:active{transform:translateY(1px);}
+  .btn-assess.secondary{background:#fff;color:var(--blue);border:1.5px solid var(--blue);}
+  .btn-assess.secondary:hover{background:#eaf3ff;}
+  .assess-result{display:none;margin-top:28px;background:var(--bg-soft);border-radius:12px;padding:28px 30px;border-left:4px solid var(--blue);}
+  .assess-result.show{display:block;}
+  .assess-result h4{font-size:18px;margin-bottom:8px;color:var(--navy);}
+  .assess-result p{color:var(--text);font-size:15px;margin-bottom:14px;}
+  .score-bar-wrap{background:#e3e9f2;border-radius:999px;height:10px;overflow:hidden;margin-bottom:6px;}
+  .score-bar{height:100%;border-radius:999px;background:linear-gradient(90deg,var(--blue),#3f97ff);transition:width .8s cubic-bezier(.2,.7,.2,1);}
+  .score-label{font-size:13px;color:var(--muted);margin-bottom:18px;}
+  .result-layout{display:grid;grid-template-columns:1fr 260px;gap:32px;align-items:center;margin-top:20px;}
+  @media(max-width:700px){.result-layout{grid-template-columns:1fr;}}
+  .dim-bars{display:flex;flex-direction:column;gap:12px;}
+  .dim-row{display:grid;grid-template-columns:1fr 120px 36px;gap:10px;align-items:center;}
+  .dim-row .dl{font-size:13px;color:var(--ink);font-weight:600;}
+  .dim-row .db{background:#e3e9f2;border-radius:999px;height:8px;overflow:hidden;}
+  .dim-row .df{height:100%;border-radius:999px;transition:width .9s cubic-bezier(.2,.7,.2,1);}
+  .dim-row .dv{font-size:12px;color:var(--muted);text-align:right;font-weight:600;}
+  .score-badge{display:inline-flex;align-items:center;gap:8px;padding:7px 16px;border-radius:999px;font-weight:700;font-size:14px;margin-bottom:14px;}
+  .badge-low{background:#fff0f0;color:#c0392b;}
+  .badge-mid{background:#fff8e6;color:#9a6c00;}
+  .badge-high{background:#e8f8f0;color:#1a7a4a;}
+  .assess-sent{display:none;background:#e8f8f0;border:1.5px solid #1a7a4a;border-radius:10px;padding:16px 20px;margin-top:20px;font-size:15px;color:#1a7a4a;font-weight:600;}
+  .assess-sent.show{display:block;}
+  .assess-error{display:none;background:#fff0f0;border:1.5px solid #c0392b;border-radius:10px;padding:16px 20px;margin-top:20px;font-size:15px;color:#c0392b;font-weight:600;}
+  .assess-error.show{display:block;}
+  .cta{position:relative;overflow:hidden;color:#fff;background:var(--navy);text-align:center;}
+  .cta::before{content:"";position:absolute;inset:0;background:radial-gradient(900px 440px at 50% -20%,rgba(0,112,242,.55),transparent 62%),linear-gradient(135deg,#05103a,#0a1b4d);}
+  .cta .wrap{position:relative;z-index:2;padding:92px 28px;}
+  .cta h2{color:#fff;font-size:clamp(28px,4vw,42px);margin-bottom:16px;}
+  .cta p{color:#cdd8ee;font-size:18px;max-width:54ch;margin:0 auto 34px;}
+  .cta .actions{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;}
+
+  /* ---------- footer ---------- */
+  footer{background:#05103a;color:#9fb2d6;font-size:14px;padding:46px 0;}
+  footer .wrap{display:flex;justify-content:space-between;gap:28px;flex-wrap:wrap;align-items:flex-start;}
+  footer .fbrand{display:flex;align-items:center;gap:12px;color:#fff;}
+  footer .fbrand span{font-weight:700;}
+  footer .disc{max-width:62ch;line-height:1.6;}
+
+  /* ---------- motion ---------- */
+  .reveal{opacity:0;transform:translateY(18px);transition:opacity .7s cubic-bezier(.2,.7,.2,1),transform .7s cubic-bezier(.2,.7,.2,1);}
+  .reveal.in{opacity:1;transform:none;}
+  /* staggered cascades within grids */
+  .types .reveal:nth-child(2){transition-delay:.1s}
+  .types .reveal:nth-child(3){transition-delay:.2s}
+  .res-grid .reveal:nth-child(2){transition-delay:.08s}
+  .res-grid .reveal:nth-child(3){transition-delay:.16s}
+  .res-grid .reveal:nth-child(4){transition-delay:.24s}
+  .res-grid .reveal:nth-child(5){transition-delay:.32s}
+  .cases .reveal:nth-child(2){transition-delay:.12s}
+  .cases .reveal:nth-child(3){transition-delay:.24s}
+  /* hero entrance on load */
+  @keyframes heroIn{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:none}}
+  .hero .kicker,.hero h1,.hero .lede,.hero .actions,.hero .stats{opacity:0;animation:heroIn .85s cubic-bezier(.2,.7,.2,1) forwards;}
+  .hero .kicker{animation-delay:.05s}
+  .hero h1{animation-delay:.16s}
+  .hero .lede{animation-delay:.32s}
+  .hero .actions{animation-delay:.48s}
+  .hero .stats{animation-delay:.62s}
+  @keyframes drift{from{background-position:0 0,0 0}to{background-position:64px 64px,64px 64px}}
+  .count{font-variant-numeric:tabular-nums;}
+  @media(prefers-reduced-motion:reduce){
+    .reveal{opacity:1;transform:none;transition:none;}
+    .hero .kicker,.hero h1,.hero .lede,.hero .actions,.hero .stats{opacity:1;animation:none;}
+    .hero::after{animation:none!important;}
+    html{scroll-behavior:auto;}
+  }
+  a:focus-visible,.btn:focus-visible{outline:3px solid #8fc0ff;outline-offset:3px;border-radius:6px;}
+
+  /* ---- welcome survey ---- */
+  .survey-overlay{position:fixed;inset:0;z-index:1000;background:rgba(5,16,58,.55);backdrop-filter:blur(4px);display:none;align-items:center;justify-content:center;padding:24px;opacity:0;transition:opacity .3s;}
+  .survey-overlay.show{display:flex;opacity:1;}
+  .survey-card{background:#fff;border-radius:16px;max-width:620px;width:100%;padding:40px 40px 34px;position:relative;box-shadow:0 24px 70px rgba(5,16,58,.35);transform:translateY(16px) scale(.98);transition:transform .35s cubic-bezier(.2,.7,.2,1);max-height:92vh;overflow-y:auto;}
+  .survey-overlay.show .survey-card{transform:none;}
+  .survey-card h2{font-size:26px;line-height:1.2;margin:4px 0 8px;color:var(--ink);}
+  .survey-lede{font-size:15px;color:var(--text);margin:0 0 22px;line-height:1.55;}
+  .survey-close{position:absolute;top:16px;right:18px;background:none;border:none;font-size:28px;line-height:1;color:#b4bfcc;cursor:pointer;padding:4px;transition:color .18s;}
+  .survey-close:hover{color:var(--ink);}
+  .chips{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:26px;}
+  .chip{font-family:inherit;font-size:14.5px;font-weight:600;color:var(--ink);background:#fff;border:1.5px solid var(--line);border-radius:999px;padding:10px 18px;cursor:pointer;transition:all .18s;display:inline-flex;align-items:center;gap:8px;}
+  .chip:hover{border-color:var(--blue);color:var(--blue);}
+  .chip.on{background:var(--blue);border-color:var(--blue);color:#fff;}
+  .chip.on::before{content:"\2713";font-weight:800;}
+  .survey-actions{display:flex;align-items:center;gap:20px;flex-wrap:wrap;}
+  .survey-actions .btn{border:none;cursor:pointer;font-family:inherit;font-size:15px;padding:13px 26px;}
+  .survey-actions .btn:disabled{opacity:.45;cursor:not-allowed;}
+  .survey-skip{background:none;border:none;color:var(--muted);font-family:inherit;font-size:14.5px;cursor:pointer;text-decoration:underline;text-underline-offset:3px;}
+  .survey-skip:hover{color:var(--ink);}
+  @media(max-width:560px){.survey-card{padding:30px 24px 26px;}.survey-card h2{font-size:22px;}}
+
+  /* ---- assessment wizard ---- */
+  .wiz-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;}
+  .wiz-top .eyebrow{margin-bottom:0;}
+  .wiz-count{font-size:13px;font-weight:700;color:var(--muted);letter-spacing:.02em;}
+  .wiz-count .wiz-of{color:#b4bfcc;font-weight:600;}
+  .wiz-progress{height:6px;background:#e9edf3;border-radius:999px;overflow:hidden;margin-bottom:26px;}
+  .wiz-progress-fill{height:100%;width:0;border-radius:999px;background:linear-gradient(90deg,var(--blue),#3f97ff);transition:width .4s cubic-bezier(.2,.7,.2,1);}
+  .wiz-q{font-size:24px;line-height:1.28;margin:0 0 8px;color:var(--ink);min-height:1.28em;}
+  .wiz-hint{font-size:14px;color:var(--muted);margin:0 0 22px;}
+  .wiz-options{display:flex;flex-direction:column;gap:12px;margin-bottom:24px;}
+  .wiz-opt{display:flex;align-items:center;gap:15px;width:100%;text-align:left;font-family:inherit;background:#fff;border:1.5px solid var(--line);border-radius:12px;padding:16px 18px;cursor:pointer;transition:border-color .16s,background .16s,box-shadow .16s;}
+  .wiz-opt:hover{border-color:var(--blue);background:#f5faff;}
+  .wiz-opt .wiz-opt-dot{width:22px;height:22px;border-radius:50%;border:2px solid #c6d2e0;flex:none;transition:all .16s;position:relative;}
+  .wiz-opt:hover .wiz-opt-dot{border-color:var(--blue);}
+  .wiz-opt.sel{border-color:var(--blue);background:#eaf3ff;box-shadow:0 0 0 1px var(--blue) inset;}
+  .wiz-opt.sel .wiz-opt-dot{border-color:var(--blue);background:var(--blue);}
+  .wiz-opt.sel .wiz-opt-dot::after{content:"";position:absolute;top:4px;left:4px;width:10px;height:10px;border-radius:50%;background:#fff;}
+  .wiz-opt-txt{display:flex;flex-direction:column;gap:2px;}
+  .wiz-opt-txt b{font-size:15.5px;font-weight:700;color:var(--ink);}
+  .wiz-opt-txt em{font-style:normal;font-size:13px;color:var(--muted);}
+  .wiz-nav{display:flex;align-items:center;justify-content:space-between;}
+  .wiz-back{background:none;border:none;font-family:inherit;font-size:14.5px;font-weight:600;color:var(--blue);cursor:pointer;padding:6px 2px;}
+  .wiz-back:hover{text-decoration:underline;text-underline-offset:3px;}
+  .wiz-input{display:block;width:100%;border:1.5px solid var(--line);border-radius:10px;padding:13px 16px;font-family:inherit;font-size:15px;color:var(--ink);outline:none;transition:border-color .16s;margin-bottom:12px;background:#fff;}
+  .wiz-input:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(0,112,242,.1);}
+  .wiz-input::placeholder{color:#b4bfcc;}
+  .contact-fields{margin:20px 0 4px;}
+  #wizResults .score-label{font-size:13px;color:var(--muted);margin:6px 0 0;}
+  #wizResults #resultText{margin:18px 0 0;color:var(--text);font-size:15px;line-height:1.55;}
+  #wizResults .result-layout{grid-template-columns:1fr 240px;}
+  @media(max-width:620px){#wizResults .result-layout{grid-template-columns:1fr;}}
+
+  /* ---- personalised use cases ---- */
+  .perso-ribbon{display:none;align-items:center;gap:12px;background:#eaf3ff;border:1px solid #c5ddff;border-radius:10px;padding:14px 20px;margin-bottom:24px;font-size:15px;color:var(--navy);}
+  .perso-ribbon.show{display:flex;}
+  .perso-ribbon svg{width:20px;height:20px;flex:none;stroke:var(--blue);fill:none;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round;}
+  .perso-ribbon b{font-weight:800;color:var(--blue);}
+  .perso-reset{margin-left:auto;background:none;border:none;color:var(--blue);font-family:inherit;font-size:13.5px;font-weight:700;cursor:pointer;text-decoration:underline;text-underline-offset:3px;white-space:nowrap;}
+  .use{position:relative;}
+  .use.match{background:#f5faff;box-shadow:inset 3px 0 0 var(--blue);}
+  .use .rec-badge{display:none;position:absolute;top:14px;right:16px;font-size:10.5px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--blue);background:#dcebff;padding:4px 9px;border-radius:999px;}
+  .use.match .rec-badge{display:inline-block;}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap nav">
+    <div class="brandline">
+      <span class="sap-logo"><span class="sap-mark"><b>SAP</b></span></span>
+      <span class="name">SuccessFactors<span>AI for Human Resources</span></span>
+    </div>
+    <nav class="links">
+      <a href="#types">AI types</a>
+      <a href="#usecases">Use cases</a>
+      <a href="#cases">Customers</a>
+      <a href="#resources">Resources</a>
+      <a href="#" onclick="openSurvey();return false;">Maturity check</a>
+    </nav>
+    <a class="btn btn-primary" href="#cta">Talk to SAP</a>
+  </div>
+</header>
+
+<!-- ENTRY ASSESSMENT -->
+<div class="survey-overlay" id="surveyOverlay">
+  <div class="survey-card" role="dialog" aria-modal="true" aria-labelledby="surveyTitle">
+    <button type="button" class="survey-close" onclick="closeSurvey()" aria-label="Close">&times;</button>
+
+    <!-- question view -->
+    <div id="wizQuestions">
+      <div class="wiz-top">
+        <span class="eyebrow">HR Digital Maturity Check</span>
+        <span class="wiz-count"><span id="wizStep">1</span> <span class="wiz-of">of</span> <span id="wizTotal">6</span></span>
+      </div>
+      <div class="wiz-progress"><div class="wiz-progress-fill" id="wizProgress"></div></div>
+      <h2 id="surveyTitle" class="wiz-q"></h2>
+      <p class="wiz-hint">Choose the option that best describes your organisation today.</p>
+      <div class="wiz-options" id="wizOptions"></div>
+      <div class="wiz-nav">
+        <button type="button" class="wiz-back" id="wizBack" onclick="wizPrev()">&larr; Back</button>
+        <button type="button" class="survey-skip" onclick="closeSurvey()">Skip for now</button>
+      </div>
+    </div>
+
+    <!-- contact capture -->
+    <div id="wizContact" style="display:none;">
+      <div class="wiz-top">
+        <span class="eyebrow">HR Digital Maturity Check</span>
+        <span class="wiz-count">Almost done</span>
+      </div>
+      <div class="wiz-progress"><div class="wiz-progress-fill" style="width:100%"></div></div>
+      <h2 class="wiz-q" style="margin-bottom:8px;">Your results are ready</h2>
+      <p class="wiz-hint">Enter your details to unlock your personalised maturity score.</p>
+      <div class="contact-fields">
+        <input type="text" id="cName" placeholder="Full name *" class="wiz-input" />
+        <input type="text" id="cCompany" placeholder="Company *" class="wiz-input" />
+        <input type="email" id="cEmail" placeholder="Work email (optional)" class="wiz-input" />
+      </div>
+      <p id="contactErr" style="display:none;color:#c0392b;font-size:13px;margin:-4px 0 12px;">Please enter your name and company.</p>
+      <div class="wiz-nav" style="margin-top:8px;">
+        <button type="button" class="wiz-back" onclick="wizContactBack()">&larr; Back</button>
+        <button type="button" class="btn btn-primary" onclick="submitContact()" style="border:none;cursor:pointer;font-family:inherit;font-size:15px;padding:13px 26px;">See my results</button>
+      </div>
+    </div>
+
+    <!-- results view -->
+    <div id="wizResults" style="display:none;">
+      <div class="wiz-top"><span class="eyebrow">Your result</span></div>
+      <span class="score-badge" id="scoreBadge"></span>
+      <h2 class="wiz-q" id="resultTitle">Your HR digital maturity</h2>
+      <div class="score-bar-wrap"><div class="score-bar" id="scoreBar" style="width:0%"></div></div>
+      <p class="score-label" id="scoreLabel"></p>
+      <div class="result-layout" style="margin-top:22px;">
+        <div class="dim-bars" id="dimBars"></div>
+        <div id="radarWrap" style="justify-self:center;"></div>
+      </div>
+      <p id="resultText"></p>
+      <div class="survey-actions" style="margin-top:10px;">
+        <button type="button" class="btn btn-primary" onclick="finishAssessment()">See what SAP can do for you</button>
+        <button type="button" class="survey-skip" onclick="emailResults()">Email my results to an SAP expert</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="wrap">
+    <span class="kicker">SAP SuccessFactors / Human Capital Management</span>
+    <h1>Three kinds of AI, <span class="accent">built into HR</span></h1>
+    <p class="lede">Predictive insight, a generative copilot, and autonomous agents working together across SAP SuccessFactors. Less administration, better decisions, and a simpler experience for every employee.</p>
+    <div class="actions">
+      <a class="btn btn-primary" href="#cases">See customer results</a>
+      <a class="btn btn-outline" href="#types">Explore the AI types</a>
+    </div>
+    <div class="stats">
+      <div class="s"><b><span class="count" data-count="1">0</span><em>M</em></b><span>colleague productivity hours saved a year at BT Group</span></div>
+      <div class="s"><b><span class="count" data-count="60">0</span><em>%</em></b><span>efficiency gain on a PwC AI tool</span></div>
+      <div class="s"><b><span class="count" data-count="13">0</span></b><span>months to transform HR at Somerset Council</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 1 -->
+<section class="section" id="types">
+  <div class="wrap">
+    <div class="head reveal">
+      <span class="eyebrow">The foundation</span>
+      <h2>The three types of AI in SAP</h2>
+      <p>SAP combines three complementary forms of artificial intelligence across SuccessFactors. Each one addresses a different class of HR problem.</p>
+    </div>
+    <div class="types">
+
+      <article class="type reveal">
+        <span class="no">01</span>
+        <div class="ic">
+          <svg viewBox="0 0 24 24"><polyline points="3 17 9 11 13 15 21 7"/><polyline points="15 7 21 7 21 13"/></svg>
+        </div>
+        <span class="tag">Anticipate</span>
+        <h3>Predictive AI</h3>
+        <p>Reads patterns in your data to forecast outcomes before they happen, so HR can act early instead of reacting late.</p>
+        <div class="ex"><b>In practice:</b> flagging employee flight risk and modelling future workforce demand.</div>
+      </article>
+
+      <article class="type reveal">
+        <span class="no">02</span>
+        <div class="ic">
+          <svg viewBox="0 0 24 24"><path d="M21 11.5a8.4 8.4 0 0 1-8.5 8.5 8.6 8.6 0 0 1-3.9-.9L3 21l1.9-5.6A8.4 8.4 0 0 1 4 11.5 8.5 8.5 0 0 1 12.5 3 8.4 8.4 0 0 1 21 11.5Z"/><circle cx="9" cy="11.5" r=".6" fill="currentColor" stroke="none"/><circle cx="12.5" cy="11.5" r=".6" fill="currentColor" stroke="none"/><circle cx="16" cy="11.5" r=".6" fill="currentColor" stroke="none"/></svg>
+        </div>
+        <span class="tag">Assist</span>
+        <h3>Generative AI, Joule</h3>
+        <p>SAP's AI copilot answers questions, drafts content, and simplifies everyday HR tasks through plain, natural language.</p>
+        <div class="ex"><b>In practice:</b> explaining a policy, drafting a job description, or summarising a team on request.</div>
+      </article>
+
+      <article class="type reveal">
+        <span class="no">03</span>
+        <div class="ic">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.6 1.6 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.6 1.6 0 0 0-2.7 1.1V21a2 2 0 1 1-4 0v-.1A1.6 1.6 0 0 0 7.5 19.4l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1A1.6 1.6 0 0 0 4.6 15H4.5a2 2 0 1 1 0-4h.1a1.6 1.6 0 0 0 1.1-2.7l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.6 1.6 0 0 0 1.8.3H11a1.6 1.6 0 0 0 1-1.5V4.5a2 2 0 1 1 4 0v.1a1.6 1.6 0 0 0 2.7 1.1l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.6 1.6 0 0 0-.3 1.8V11a1.6 1.6 0 0 0 1.5 1h.1a2 2 0 1 1 0 4h-.1a1.6 1.6 0 0 0-1.4 1Z"/></svg>
+        </div>
+        <span class="tag">Automate</span>
+        <h3>Agentic AI</h3>
+        <p>Autonomous AI agents execute multi-step tasks from start to finish, without a human stepping in at every stage.</p>
+        <div class="ex"><b>In practice:</b> running full onboarding journeys and processing payroll end to end.</div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 2 -->
+<section class="section soft" id="usecases">
+  <div class="wrap">
+    <div class="head reveal">
+      <span class="eyebrow">In practice</span>
+      <h2>AI use cases across the HR lifecycle</h2>
+      <p>Wherever work happens in HR, AI removes friction. From the first application through to performance and growth.</p>
+    </div>
+    <div class="perso-ribbon" id="persoRibbon">
+      <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+      <span id="persoRibbonText"></span>
+      <button type="button" class="perso-reset" onclick="openSurvey()">Retake the check</button>
+    </div>
+    <div class="uses reveal" id="usesGrid">
+
+      <div class="use" data-key="recruitment"><div class="uh"><span class="uic"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.5" y2="16.5"/></svg></span><h4>Recruitment &amp; screening</h4></div><p>Surface best-fit candidates faster and cut manual CV review.</p></div>
+
+      <div class="use" data-key="onboarding"><div class="uh"><span class="uic"><svg viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></span><h4>Onboarding</h4></div><p>Guided, automated journeys that make new hires productive from day one.</p></div>
+
+      <div class="use" data-key="payroll"><div class="uh"><span class="uic"><svg viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg></span><h4>Payroll automation</h4></div><p>Faster, more accurate pay runs with far less manual processing.</p></div>
+
+      <div class="use" data-key="planning"><div class="uh"><span class="uic"><svg viewBox="0 0 24 24"><line x1="4" y1="20" x2="4" y2="10"/><line x1="10" y1="20" x2="10" y2="4"/><line x1="16" y1="20" x2="16" y2="12"/><line x1="22" y1="20" x2="22" y2="7"/></svg></span><h4>Workforce planning</h4></div><p>Forecast demand, skills gaps, and headcount with predictive models.</p></div>
+
+      <div class="use" data-key="selfservice"><div class="uh"><span class="uic"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg></span><h4>Employee self-service</h4></div><p>Joule answers everyday HR questions instantly, in natural language.</p></div>
+
+      <div class="use" data-key="performance"><div class="uh"><span class="uic"><svg viewBox="0 0 24 24"><polygon points="12 2 15 9 22 9.3 16.5 14 18.5 21 12 17 5.5 21 7.5 14 2 9.3 9 9"/></svg></span><h4>Performance management</h4></div><p>Draft reviews, summarise feedback, and track goals with less admin.</p></div>
+
+      <div class="use" data-key="skills"><div class="uh"><span class="uic"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><path d="M6.5 10v4h11"/></svg></span><h4>Skills matching</h4></div><p>Connect people to roles, projects, and learning based on real skills.</p></div>
+
+      <div class="use" data-static="1" style="background:var(--bg-soft);"><div class="uh"><span class="uic" style="background:#fff5df;"><svg viewBox="0 0 24 24" style="stroke:var(--gold);"><path d="M12 2v4M12 18v4M2 12h4M18 12h4"/><circle cx="12" cy="12" r="4"/></svg></span><h4 style="color:var(--gold);">And beyond</h4></div><p>One AI foundation extending across the full suite as your needs grow.</p></div>
+
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 3 -->
+<section class="section" id="cases">
+  <div class="wrap">
+    <div class="head reveal">
+      <span class="eyebrow">Proven results</span>
+      <h2>Customer case studies</h2>
+      <p>Real organisations delivering measurable outcomes with SAP AI in HR.</p>
+    </div>
+
+    <div class="cases">
+
+      <article class="case reveal">
+        <div class="metric"><span class="count" data-count="13">0</span> mo.<small>to a single HR and payroll platform for 8,500 employees</small></div>
+        <div>
+          <div class="co">Somerset Council</div>
+          <p class="desc">Somerset Council modernised HR and payroll with <strong>SAP SuccessFactors and EPI-USE</strong>, consolidating onto one unified platform in a 13-month transformation.</p>
+        </div>
+        <a class="go" target="_blank" rel="noopener" href="https://news.sap.com/uk/2026/11/somerset-council-modernises-hr-and-payroll-with-sap-successfactors-and-epi-use-in-13-month-transformation/">Read the story <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+      </article>
+
+      <article class="case reveal">
+        <div class="metric"><span class="count" data-count="60">0</span>%<small>efficiency gain from an AI VAT tool for a pharma client</small></div>
+        <div>
+          <div class="co">PwC</div>
+          <p class="desc">PwC built an <strong>AI-powered VAT tool</strong> that delivered a 60% efficiency gain for a pharmaceutical client, while consolidating more than 100 ERP systems with SAP.</p>
+        </div>
+        <a class="go" target="_blank" rel="noopener" href="https://www.sap.com/about/customer-stories/pwc.html">Read the story <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+      </article>
+
+      <article class="case reveal">
+        <div class="metric"><span class="count" data-count="1">0</span>M<small>colleague productivity hours saved a year</small></div>
+        <div>
+          <div class="co">BT Group</div>
+          <p class="desc">BT Group unified HR on <strong>SAP SuccessFactors HCM</strong> with its "My HR" platform, cutting 200 fragmented processes down to 80 and saving around 1 million colleague productivity hours every year.</p>
+        </div>
+        <a class="go" target="_blank" rel="noopener" href="https://www.experience-agent.cloud.sap/assets/SAP1031375">Read the story <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+      </article>
+
+    </div>
+
+    <div class="hub reveal">
+      <div>
+        <h3>SAP AI Implementations hub</h3>
+        <p>More customer stories across Bosch, Bristol Myers Squibb, and many more.</p>
+      </div>
+      <a class="btn btn-ghost" target="_blank" rel="noopener" href="https://www.sap.com/about/customer-stories/ai-implementations.html">Browse all stories</a>
+    </div>
+  </div>
+</section>
+
+<!-- RESOURCES -->
+<section class="section soft" id="resources">
+  <div class="wrap">
+    <div class="head reveal">
+      <span class="eyebrow">Explore further</span>
+      <h2>Resources to go deeper</h2>
+      <p>Lead with product pages and interactive demos to open a conversation. Keep releases, documentation, and learning for when a team is evaluating in depth.</p>
+    </div>
+
+    <div class="res-tier">
+      <span class="t">For a first touch</span>
+      <span class="d">Product and demos. The most engaging place to start an outreach.</span>
+    </div>
+
+    <div class="res-grid">
+
+      <article class="res-card feature reveal">
+        <div class="res-cat">
+          <span class="ric"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><polygon points="10 9 16 12 10 15 10 9" fill="currentColor" stroke="none"/></svg></span>
+          <h3>Demos &amp; product tours</h3>
+        </div>
+        <span class="res-badge">Start here</span>
+        <ul class="res-links">
+          <li><a target="_blank" rel="noopener" href="https://www.sap.com/products/hcm/talent-management/product-tour.html"><svg viewBox="0 0 24 24"><path d="M14 4h6v6"/><path d="M20 4l-9 9"/><path d="M19 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1h5"/></svg><span>Interactive demo: Talent Management AI</span></a></li>
+          <li><a target="_blank" rel="noopener" href="https://www.sap.com/africa/products/hcm/core-hr-payroll/product-tour.html"><svg viewBox="0 0 24 24"><path d="M14 4h6v6"/><path d="M20 4l-9 9"/><path d="M19 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1h5"/></svg><span>Interactive demo: Core HR and Payroll</span></a></li>
+          <li><a target="_blank" rel="noopener" href="https://www.sap.com/products/hcm/trials-and-tours.html"><svg viewBox="0 0 24 24"><path d="M14 4h6v6"/><path d="M20 4l-9 9"/><path d="M19 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1h5"/></svg><span>HCM demos and trials with Joule</span></a></li>
+          <li><a target="_blank" rel="noopener" href="https://events.sap.com/soldemoseries-202609-joul/en_us/home.html"><svg viewBox="0 0 24 24"><path d="M14 4h6v6"/><path d="M20 4l-9 9"/><path d="M19 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1h5"/></svg><span>Live event: Experience Joule in SAP SuccessFactors</span></a></li>
+          <li><a target="_blank" rel="noopener" href="https://community.sap.com/t5/human-capital-management-blog-posts-by-sap/links-to-sap-demo-recordings-and-key-public-presentations-for-hcm-business/ba-p/14123478"><svg viewBox="0 0 24 24"><path d="M14 4h6v6"/><path d="M20 4l-9 9"/><path d="M19 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1h5"/></svg><span>HCM Business AI demo recordings <span class="lx">Community collection</span></span></a></li>
+        </ul>
+      </article>
+
+      <article class="res-card reveal">
+        <div class="res-cat">
+          <span class="ric"><svg viewBox="0 0 24 24"><path d="M3 9l9-6 9 6v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2Z"/><path d="M9 21V12h6v9"/></svg></span>
+          <h3>Product pages</h3>
+        </div>
+        <ul class="res-links">
+          <li><a target="_blank" rel="noopener" href="https://www.sap.com/products/hcm/ai.html"><svg viewBox="0 0 24 24"><path d="M14 4h6v6"/><path d="M20 4l-9 9"/><path d="M19 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1h5"/></svg><span>AI in SAP SuccessFactors</span></a></li>
+          <li><a target="_blank" rel="noopener" href="https://www.sap.com/products/hcm/successfactors-solutions-joule.html"><svg viewBox="0 0 24 24"><path d="M14 4h6v6"/><path d="M20 4l-9 9"/><path d="M19 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1h5"/></svg><span>Joule, the HCM copilot</span></a></li>
+          <li><a target="_blank" rel="noopener" href="https://www.sap.com/products/hcm/innovations.html"><svg viewBox="0 0 24 24"><path d="M14 4h6v6"/><path d="M20 4l-9 9"/><path d="M19 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1h5"/></svg><span>HCM innovations and AI roadmap</span></a></li>
+        </ul>
+      </article>
+
+    </div>
+
+    <div class="res-tier more">
+      <span class="t">For active evaluation</span>
+      <span class="d">Releases, technical documentation, and learning for when the prospect is comparing in detail.</span>
+    </div>
+
+    <div class="res-grid">
+
+      <article class="res-card reveal">
+        <div class="res-cat">
+          <span class="ric"><svg viewBox="0 0 24 24"><path d="M3 11l15-6v14l-15-6Z"/><path d="M3 11v5"/><path d="M8 13v6a1 1 0 0 0 1 1h2"/></svg></span>
+          <h3>Releases &amp; news</h3>
+        </div>
+        <ul class="res-links">
+          <li><a target="_blank" rel="noopener" href="https://news.sap.com/2026/04/sap-successfactors-1h-2026-release"><svg viewBox="0 0 24 24"><path d="M14 4h6v6"/><path d="M20 4l-9 9"/><path d="M19 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1h5"/></svg><span>1H 2026 release <span class="lx">Agentic AI agents</span></span></a></li>
+          <li><a target="_blank" rel="noopener" href="https://news.sap.com/2025/10/sap-successfactors-2h-2025-release-ai-skills-people-insights/"><svg viewBox="0 0 24 24"><path d="M14 4h6v6"/><path d="M20 4l-9 9"/><path d="M19 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1h5"/></svg><span>2H 2025 release <span class="lx">People Intelligence and AI</span></span></a></li>
+          <li><a target="_blank" rel="noopener" href="https://news.sap.com/2025/04/sap-successfactors-1h-2025-release-new-ai-enabled-innovations/"><svg viewBox="0 0 24 24"><path d="M14 4h6v6"/><path d="M20 4l-9 9"/><path d="M19 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1h5"/></svg><span>1H 2025 release <span class="lx">Joule mobile, 250+ features</span></span></a></li>
+        </ul>
+      </article>
+
+      <article class="res-card reveal">
+        <div class="res-cat">
+          <span class="ric"><svg viewBox="0 0 24 24"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8Z"/><path d="M14 3v5h5"/><line x1="9" y1="13" x2="15" y2="13"/><line x1="9" y1="17" x2="13" y2="17"/></svg></span>
+          <h3>Technical documentation</h3>
+        </div>
+        <ul class="res-links">
+          <li><a target="_blank" rel="noopener" href="https://help.sap.com/docs/successfactors-platform/using-admin-center/premium-ai-features-in-sap-successfactors"><svg viewBox="0 0 24 24"><path d="M14 4h6v6"/><path d="M20 4l-9 9"/><path d="M19 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1h5"/></svg><span>Premium AI features <span class="lx">What needs a licence</span></span></a></li>
+          <li><a target="_blank" rel="noopener" href="https://help.sap.com/docs/successfactors-platform/using-admin-center/base-ai-features-in-sap-successfactors"><svg viewBox="0 0 24 24"><path d="M14 4h6v6"/><path d="M20 4l-9 9"/><path d="M19 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1h5"/></svg><span>Base AI features <span class="lx">Included functions</span></span></a></li>
+          <li><a target="_blank" rel="noopener" href="https://help.sap.com/docs/successfactors-platform/understanding-sap-successfactors-ai-agents/5ce5ab9a38c24b469a6cdbe857d99f8d.html"><svg viewBox="0 0 24 24"><path d="M14 4h6v6"/><path d="M20 4l-9 9"/><path d="M19 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1h5"/></svg><span>Joule agents and assistants</span></a></li>
+          <li><a target="_blank" rel="noopener" href="https://help.sap.com/docs/AUTONOMOUS_HCM"><svg viewBox="0 0 24 24"><path d="M14 4h6v6"/><path d="M20 4l-9 9"/><path d="M19 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1h5"/></svg><span>Autonomous HCM agents hub</span></a></li>
+        </ul>
+      </article>
+
+      <article class="res-card reveal">
+        <div class="res-cat">
+          <span class="ric"><svg viewBox="0 0 24 24"><path d="M22 10 12 5 2 10l10 5 10-5Z"/><path d="M6 12v5c0 1 2.7 2.5 6 2.5s6-1.5 6-2.5v-5"/></svg></span>
+          <h3>Learning</h3>
+        </div>
+        <ul class="res-links">
+          <li><a target="_blank" rel="noopener" href="https://learning.sap.com/courses/experiencing-sap-business-ai"><svg viewBox="0 0 24 24"><path d="M14 4h6v6"/><path d="M20 4l-9 9"/><path d="M19 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1h5"/></svg><span>Experiencing SAP Business AI <span class="lx">Free course</span></span></a></li>
+          <li><a target="_blank" rel="noopener" href="https://learning.sap.com/courses/exploring-joule-and-ai-agents-in-sap-successfactors/interacting-with-joule-for-sap-successfactors_c03ab32b-3029-4c62-b2ab-edbbe44dd250"><svg viewBox="0 0 24 24"><path d="M14 4h6v6"/><path d="M20 4l-9 9"/><path d="M19 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1h5"/></svg><span>Interacting with Joule for SuccessFactors</span></a></li>
+        </ul>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta" id="cta">
+  <div class="wrap">
+    <h2>Put SAP Business AI to work in HR</h2>
+    <p>See how predictive insight, Joule, and agentic automation come together in SAP SuccessFactors to transform the employee experience.</p>
+    <div class="actions">
+      <a class="btn btn-primary" target="_blank" rel="noopener" href="https://www.sap.com/uk/products/artificial-intelligence.html">Discover SAP Business AI</a>
+      <a class="btn btn-outline" target="_blank" rel="noopener" href="https://www.sap.com/about/customer-stories/ai-implementations.html">See customer results</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="fbrand">
+      <span class="sap-logo"><span class="sap-mark sm"><b>SAP</b></span></span>
+      <span>SuccessFactors</span>
+    </div>
+    <p class="disc">This page is for informational purposes. Outcomes and figures are drawn from published SAP customer stories. SAP, SuccessFactors, and Joule are trademarks or registered trademarks of SAP SE in Germany and other countries. &copy; 2026.</p>
+  </div>
+</footer>
+
+<script>
+  /* ---- entry maturity assessment ---- */
+  var ASSESS = [
+    {key:"recruitment", label:"Recruitment", q:"Does your company use digital tools to attract and screen candidates?"},
+    {key:"onboarding",  label:"Onboarding",  q:"Does your onboarding process guide new hires automatically from day one?"},
+    {key:"skills",      label:"Learning",    q:"Does your organisation actively support employee learning and skills development?"},
+    {key:"performance", label:"Feedback",    q:"Does your company have a structured way to collect and act on employee feedback?"},
+    {key:"planning",    label:"Analytics",   q:"Does your HR team use data to anticipate workforce challenges before they happen?"},
+    {key:"selfservice", label:"Dashboards",  q:"Do your HR leaders have access to real-time dashboards to track key people metrics?"}
+  ];
+  var OPTIONS = [
+    {v:0, t:"Not in place",       d:"We haven't started here yet"},
+    {v:1, t:"Partially in place", d:"Some tools or processes exist"},
+    {v:2, t:"Fully in place",     d:"Well established and working"}
+  ];
+  var PRIORITY_LABELS = {
+    recruitment:"Recruitment & screening", onboarding:"Onboarding", payroll:"Payroll automation",
+    planning:"Workforce planning", selfservice:"Employee self-service",
+    performance:"Performance management", skills:"Skills matching"
+  };
+  var answers = ASSESS.map(function(){return null;});
+  var wizIdx = 0;
+
+  function openSurvey(){
+    wizIdx = 0;
+    showResultsView(false);
+    renderWiz();
+    document.getElementById("surveyOverlay").classList.add("show");
+    document.body.style.overflow="hidden";
+  }
+  function closeSurvey(){
+    document.getElementById("surveyOverlay").classList.remove("show");
+    document.body.style.overflow="";
+  }
+  function showResultsView(show){
+    document.getElementById("wizQuestions").style.display = show ? "none" : "block";
+    document.getElementById("wizContact").style.display   = "none";
+    document.getElementById("wizResults").style.display   = show ? "block" : "none";
+  }
+  function showContactPanel(){
+    document.getElementById("wizQuestions").style.display = "none";
+    document.getElementById("wizContact").style.display   = "block";
+    document.getElementById("wizResults").style.display   = "none";
+  }
+  function wizContactBack(){
+    document.getElementById("wizContact").style.display   = "none";
+    document.getElementById("wizQuestions").style.display = "block";
+    document.getElementById("wizResults").style.display   = "none";
+    wizIdx = ASSESS.length - 1;
+    renderWiz();
+  }
+  function submitContact(){
+    var name    = (document.getElementById("cName").value    || "").trim();
+    var company = (document.getElementById("cCompany").value || "").trim();
+    var email   = (document.getElementById("cEmail").value   || "").trim();
+    var err = document.getElementById("contactErr");
+    if(!name || !company){ err.style.display="block"; return; }
+    err.style.display = "none";
+    var d = scoreData();
+    sendToSheets(name, company, email, d);
+    showResults();
+  }
+
+  function renderWiz(){
+    var item = ASSESS[wizIdx];
+    document.getElementById("wizStep").textContent = wizIdx+1;
+    document.getElementById("wizTotal").textContent = ASSESS.length;
+    document.getElementById("wizProgress").style.width = Math.round((wizIdx/ASSESS.length)*100)+"%";
+    document.getElementById("surveyTitle").textContent = item.q;
+    document.getElementById("wizOptions").innerHTML = OPTIONS.map(function(o){
+      var sel = answers[wizIdx]===o.v ? " sel" : "";
+      return '<button type="button" class="wiz-opt'+sel+'" onclick="wizAnswer('+o.v+')">'
+        +'<span class="wiz-opt-dot"></span>'
+        +'<span class="wiz-opt-txt"><b>'+o.t+'</b><em>'+o.d+'</em></span></button>';
+    }).join("");
+    document.getElementById("wizBack").style.visibility = wizIdx===0 ? "hidden" : "visible";
+  }
+
+  function wizAnswer(v){
+    answers[wizIdx]=v;
+    renderWiz();
+    setTimeout(function(){
+      if(wizIdx < ASSESS.length-1){ wizIdx++; renderWiz(); }
+      else { showContactPanel(); }
+    }, 230);
+  }
+  function wizPrev(){ if(wizIdx>0){ wizIdx--; renderWiz(); } }
+
+  function scoreData(){
+    var scores = answers.map(function(a){return a==null?0:a;});
+    var total = scores.reduce(function(a,b){return a+b;},0);
+    var max = ASSESS.length*2;
+    var pct = Math.round(total/max*100);
+    var level = pct<=33?"Early stage":pct<=66?"Developing":"Advanced";
+    return {scores:scores,total:total,max:max,pct:pct,level:level};
+  }
+  function weakKeys(d){
+    return ASSESS.filter(function(a,i){return d.scores[i]<=1;}).map(function(a){return a.key;});
+  }
+
+  function showResults(){
+    var d = scoreData();
+    document.getElementById("wizProgress").style.width="100%";
+    var badge=document.getElementById("scoreBadge");
+    badge.textContent=d.level+": "+d.pct+"%";
+    badge.className="score-badge "+(d.pct<=33?"badge-low":d.pct<=66?"badge-mid":"badge-high");
+    document.getElementById("resultTitle").textContent="Your HR digital maturity";
+    document.getElementById("scoreBar").style.width="0%";
+    setTimeout(function(){document.getElementById("scoreBar").style.width=d.pct+"%";},60);
+    document.getElementById("scoreLabel").textContent=d.total+" out of "+d.max+" points";
+
+    document.getElementById("dimBars").innerHTML = d.scores.map(function(s,i){
+      var w=Math.round(s/2*100);
+      return '<div class="dim-row"><span class="dl">'+ASSESS[i].label+'</span>'
+        +'<div class="db"><div class="df" style="width:0%;background:'+barColor(s)+';" data-w="'+w+'"></div></div>'
+        +'<span class="dv">'+barLabel(s)+'</span></div>';
+    }).join("");
+    setTimeout(function(){
+      document.querySelectorAll("#dimBars .df").forEach(function(el){el.style.width=el.getAttribute("data-w")+"%";});
+    },80);
+    document.getElementById("radarWrap").innerHTML=buildRadar(d.scores);
+
+    var weak = ASSESS.filter(function(a,i){return d.scores[i]<=1;}).map(function(a){return a.label;});
+    document.getElementById("resultText").textContent = weak.length
+      ? "Your biggest opportunities are "+weak.join(", ")+". We've highlighted exactly where SAP SuccessFactors can help you below."
+      : "Your HR is highly mature. Explore how agentic AI and Joule can push you even further.";
+
+    showResultsView(true);
+    try{ localStorage.setItem("sapAssess", JSON.stringify(answers)); }catch(e){}
+  }
+
+  var SHEETS_URL = "YOUR_APPS_SCRIPT_URL";
+
+  function sendToSheets(name, company, email, d){
+    var lbl = function(s){return s===0?"Not in place":s===1?"Partially in place":"Fully in place";};
+    var payload = {
+      name: name, company: company, email: email,
+      score: d.pct, level: d.level,
+      recruitment: lbl(d.scores[0]), onboarding: lbl(d.scores[1]),
+      learning:    lbl(d.scores[2]), feedback:    lbl(d.scores[3]),
+      analytics:   lbl(d.scores[4]), dashboards:  lbl(d.scores[5])
+    };
+    if(SHEETS_URL && SHEETS_URL !== "YOUR_APPS_SCRIPT_URL"){
+      fetch(SHEETS_URL, {method:"POST", mode:"no-cors", body:JSON.stringify(payload)}).catch(function(){});
+    }
+    var lines = [
+      "New assessment from "+name+" at "+company+(email?" ("+email+")":""),
+      "",
+      "Score: "+d.pct+"% - "+d.level+" ("+d.total+"/"+d.max+" points)",
+      ""
+    ];
+    ASSESS.forEach(function(a,i){ lines.push("  "+a.label+": "+lbl(d.scores[i])); });
+    fetch("https://api.web3forms.com/submit",{
+      method:"POST",
+      headers:{"Content-Type":"application/json","Accept":"application/json"},
+      body:JSON.stringify({
+        access_key:"6369b3c8-bcd4-4d87-8bd7-9c996fe3d85e",
+        subject:"HR Maturity: "+d.pct+"% ("+d.level+") - "+name+", "+company,
+        message:lines.join("\n")
+      })
+    }).catch(function(){});
+  }
+
+  function finishAssessment(){
+    closeSurvey();
+    var d = scoreData();
+    personalise(weakKeys(d), d);
+    var sec=document.getElementById("usecases");
+    if(sec) setTimeout(function(){sec.scrollIntoView({behavior:"smooth",block:"start"});},260);
+  }
+
+  function emailResults(){
+    var d = scoreData();
+    var lbl=function(s){return s===0?"Not in place":s===1?"Partially in place":"Fully in place";};
+    var lines=["HR Digital Maturity self-assessment","Score: "+d.pct+"% - "+d.level+" ("+d.total+"/"+d.max+" points)",""];
+    ASSESS.forEach(function(a,i){ lines.push("  "+a.label+": "+lbl(d.scores[i])); });
+    var subject="My HR Digital Maturity result ("+d.pct+"% - "+d.level+")";
+    window.location.href="mailto:marc.delicado@sap.com?subject="+encodeURIComponent(subject)+"&body="+encodeURIComponent(lines.join("\n"));
+  }
+
+  function personalise(keys, d){
+    var grid=document.getElementById("usesGrid");
+    var cards=Array.prototype.slice.call(grid.querySelectorAll(".use"));
+    cards.forEach(function(card){
+      var k=card.getAttribute("data-key");
+      var isMatch = k && keys.indexOf(k)>-1;
+      card.classList.toggle("match", isMatch);
+      if(!card.querySelector(".rec-badge")){
+        var b=document.createElement("span");
+        b.className="rec-badge"; b.textContent="Focus area";
+        card.appendChild(b);
+      }
+    });
+    var matched=[], rest=[];
+    cards.forEach(function(card){ (card.classList.contains("match")?matched:rest).push(card); });
+    matched.sort(function(a,b){ return keys.indexOf(a.getAttribute("data-key")) - keys.indexOf(b.getAttribute("data-key")); });
+    matched.concat(rest).forEach(function(card){ grid.appendChild(card); });
+
+    var txt=document.getElementById("persoRibbonText");
+    if(keys.length){
+      var names=keys.map(function(k){return PRIORITY_LABELS[k]||k;});
+      txt.innerHTML=(d?"Based on your "+d.pct+"% maturity score, your ":"Your ")+"biggest opportunities: <b>"+names.join("</b>, <b>")+"</b>.";
+    } else {
+      txt.innerHTML="Your HR is highly mature. Explore how agentic AI and Joule can push you even further.";
+    }
+    document.getElementById("persoRibbon").classList.add("show");
+  }
+
+  (function initAssess(){
+    var saved=null;
+    try{ saved=JSON.parse(localStorage.getItem("sapAssess")||"null"); }catch(e){}
+    if(saved && saved.length===ASSESS.length && saved.every(function(x){return x!=null;})){
+      answers = saved;
+      var d = scoreData();
+      personalise(weakKeys(d), d);
+    } else {
+      setTimeout(openSurvey, 600);
+    }
+  })();
+
+  /* ---- reveal + count-up ---- */
+  (function(){
+    var reduce = !window.matchMedia || window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    var hasIO = "IntersectionObserver" in window;
+    var items = document.querySelectorAll(".reveal");
+    if(reduce||!hasIO){items.forEach(function(el){el.classList.add("in");});}
+    else{
+      var io=new IntersectionObserver(function(entries){
+        entries.forEach(function(e){if(e.isIntersecting){e.target.classList.add("in");io.unobserve(e.target);}});
+      },{threshold:.14});
+      items.forEach(function(el){io.observe(el);});
+    }
+    var counters=document.querySelectorAll(".count");
+    function animateCount(el){
+      var target=parseInt(el.getAttribute("data-count"),10)||0,dur=1300,start=null;
+      function step(ts){if(!start)start=ts;var p=Math.min((ts-start)/dur,1),e=1-Math.pow(1-p,3);el.textContent=Math.round(e*target);if(p<1)requestAnimationFrame(step);else el.textContent=target;}
+      requestAnimationFrame(step);
+    }
+    if(reduce||!hasIO){counters.forEach(function(el){el.textContent=el.getAttribute("data-count");});}
+    else{
+      var cio=new IntersectionObserver(function(entries){
+        entries.forEach(function(e){if(e.isIntersecting){animateCount(e.target);cio.unobserve(e.target);}});
+      },{threshold:.6});
+      counters.forEach(function(el){cio.observe(el);});
+    }
+  })();
+
+  /* ---- radar labels (match assessment dimensions) ---- */
+  var DIM_LABELS = ASSESS.map(function(a){return a.label;});
+
+  /* ---- radar chart SVG ---- */
+  function buildRadar(scores){
+    var cx=130,cy=130,r=95,n=6;
+    var angles=DIM_LABELS.map(function(_,i){return(i*2*Math.PI/n)-Math.PI/2;});
+    function pt(ratio,i){return{x:cx+r*ratio*Math.cos(angles[i]),y:cy+r*ratio*Math.sin(angles[i])};}
+    var gridSvg="";
+    [0.33,0.66,1].forEach(function(lv){
+      var pts=angles.map(function(_,i){var p=pt(lv,i);return p.x+","+p.y;}).join(" ");
+      gridSvg+='<polygon points="'+pts+'" fill="none" stroke="#e3e9f0" stroke-width="1"/>';
+    });
+    var axesSvg=angles.map(function(a){
+      return '<line x1="'+cx+'" y1="'+cy+'" x2="'+(cx+r*Math.cos(a))+'" y2="'+(cy+r*Math.sin(a))+'" stroke="#e3e9f0" stroke-width="1"/>';
+    }).join("");
+    var dataPts=scores.map(function(s,i){var ratio=s/2,p=pt(ratio||0.04,i);return p.x+","+p.y;}).join(" ");
+    var dotsSvg=scores.map(function(s,i){var ratio=s/2,p=pt(ratio||0.04,i);return'<circle cx="'+p.x+'" cy="'+p.y+'" r="4" fill="#0070f2"/>';}).join("");
+    var labelSvg=DIM_LABELS.map(function(l,i){
+      var p=pt(1.28,i);
+      return'<text x="'+p.x+'" y="'+p.y+'" text-anchor="middle" dominant-baseline="middle" font-size="10.5" fill="#5b6b7f" font-family="Inter,sans-serif">'+l+'</text>';
+    }).join("");
+    return'<svg width="260" height="260" viewBox="0 0 260 260">'+gridSvg+axesSvg+'<polygon points="'+dataPts+'" fill="rgba(0,112,242,0.12)" stroke="#0070f2" stroke-width="2"/>'+dotsSvg+labelSvg+'</svg>';
+  }
+
+  /* ---- dim bar ---- */
+  function barColor(v){return v===0?"#e3e9f2":v===1?"#3f97ff":"#0058c6";}
+  function barLabel(v){return v===0?"Not in place":v===1?"Partial":"In place";}
+</script>
+</body>
+</html>

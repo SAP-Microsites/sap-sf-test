@@ -863,6 +863,7 @@
   var SHEETS_URL = "YOUR_APPS_SCRIPT_URL";
 
   function sendToSheets(name, company, email, d){
+    if(!SHEETS_URL || SHEETS_URL === "YOUR_APPS_SCRIPT_URL") return;
     var lbl = function(s){return s===0?"Not in place":s===1?"Partially in place":"Fully in place";};
     var payload = {
       name: name, company: company, email: email,
@@ -871,25 +872,7 @@
       learning:    lbl(d.scores[2]), feedback:    lbl(d.scores[3]),
       analytics:   lbl(d.scores[4]), dashboards:  lbl(d.scores[5])
     };
-    if(SHEETS_URL && SHEETS_URL !== "YOUR_APPS_SCRIPT_URL"){
-      fetch(SHEETS_URL, {method:"POST", mode:"no-cors", body:JSON.stringify(payload)}).catch(function(){});
-    }
-    var lines = [
-      "New assessment from "+name+" at "+company+(email?" ("+email+")":""),
-      "",
-      "Score: "+d.pct+"% - "+d.level+" ("+d.total+"/"+d.max+" points)",
-      ""
-    ];
-    ASSESS.forEach(function(a,i){ lines.push("  "+a.label+": "+lbl(d.scores[i])); });
-    fetch("https://api.web3forms.com/submit",{
-      method:"POST",
-      headers:{"Content-Type":"application/json","Accept":"application/json"},
-      body:JSON.stringify({
-        access_key:"6369b3c8-bcd4-4d87-8bd7-9c996fe3d85e",
-        subject:"HR Maturity: "+d.pct+"% ("+d.level+") - "+name+", "+company,
-        message:lines.join("\n")
-      })
-    }).catch(function(){});
+    fetch(SHEETS_URL, {method:"POST", mode:"no-cors", body:JSON.stringify(payload)}).catch(function(){});
   }
 
   function finishAssessment(){

@@ -863,7 +863,6 @@
   var SHEETS_URL = "YOUR_APPS_SCRIPT_URL";
 
   function sendToSheets(name, company, email, d){
-    if(!SHEETS_URL || SHEETS_URL === "YOUR_APPS_SCRIPT_URL") return;
     var lbl = function(s){return s===0?"Not in place":s===1?"Partially in place":"Fully in place";};
     var payload = {
       name: name, company: company, email: email,
@@ -872,7 +871,29 @@
       learning:    lbl(d.scores[2]), feedback:    lbl(d.scores[3]),
       analytics:   lbl(d.scores[4]), dashboards:  lbl(d.scores[5])
     };
-    fetch(SHEETS_URL, {method:"POST", mode:"no-cors", body:JSON.stringify(payload)}).catch(function(){});
+    if(SHEETS_URL && SHEETS_URL !== "YOUR_APPS_SCRIPT_URL"){
+      fetch(SHEETS_URL, {method:"POST", mode:"no-cors", body:JSON.stringify(payload)}).catch(function(){});
+    }
+    var msg = "New assessment submitted\n\n"
+      + "Name: " + name + "\n"
+      + "Company: " + company + "\n"
+      + (email ? "Email: " + email + "\n" : "")
+      + "\nScore: " + d.pct + "% - " + d.level + " (" + d.total + "/" + d.max + " points)\n\n"
+      + "Recruitment: " + lbl(d.scores[0]) + "\n"
+      + "Onboarding: "  + lbl(d.scores[1]) + "\n"
+      + "Learning: "    + lbl(d.scores[2]) + "\n"
+      + "Feedback: "    + lbl(d.scores[3]) + "\n"
+      + "Analytics: "   + lbl(d.scores[4]) + "\n"
+      + "Dashboards: "  + lbl(d.scores[5]);
+    fetch("https://api.web3forms.com/submit", {
+      method: "POST",
+      headers: {"Content-Type": "application/json", "Accept": "application/json"},
+      body: JSON.stringify({
+        access_key: "6369b3c8-bcd4-4d87-8bd7-9c996fe3d85e",
+        subject: "New lead: " + name + " at " + company + " (" + d.pct + "% - " + d.level + ")",
+        message: msg
+      })
+    }).catch(function(){});
   }
 
   function finishAssessment(){

@@ -938,15 +938,7 @@
   }
 
   (function initAssess(){
-    var saved=null;
-    try{ saved=JSON.parse(localStorage.getItem("sapAssessTest")||"null"); }catch(e){}
-    if(saved && saved.length===ASSESS.length && saved.every(function(x){return x!=null;})){
-      answers = saved;
-      var d = scoreData();
-      personalise(weakKeys(d), d);
-    } else {
-      setTimeout(openSurvey, 600);
-    }
+    setTimeout(openSurvey, 600);
   })();
 
   /* ---- reveal + count-up ---- */
